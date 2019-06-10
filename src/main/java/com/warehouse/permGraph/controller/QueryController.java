@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.warehouse.permGraph.model.Result;
+import com.warehouse.permGraph.common.Result;
 import com.warehouse.permGraph.service.QueryService;
 
 @CrossOrigin

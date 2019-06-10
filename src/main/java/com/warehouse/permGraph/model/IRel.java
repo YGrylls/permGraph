@@ -1,5 +1,5 @@
 package com.warehouse.permGraph.model;
 
-public class Result {
+public interface IRel {
 
 }
