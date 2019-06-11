@@ -1,11 +1,8 @@
 package com.warehouse.permGraph.model;
 
-import java.util.List;
-
 import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Property;
-import org.neo4j.ogm.annotation.Relationship;
 
 @NodeEntity
 public class AssetClass implements IMapper {
@@ -20,17 +17,6 @@ public class AssetClass implements IMapper {
 
 	@Property("label")
 	private String assetLabel;
-
-	@Relationship(direction = Relationship.UNDIRECTED)
-	private List<Relation> rel;
-
-	public List<Relation> getRel() {
-		return rel;
-	}
-
-	public void setRel(List<Relation> rel) {
-		this.rel = rel;
-	}
 
 	public Long getId() {
 		return id;
@@ -66,12 +52,6 @@ public class AssetClass implements IMapper {
 
 	public AssetClass() {
 
-	}
-
-	@Override
-	public String toString() {
-		return "AssetClass [id=" + id + ", permID=" + permID + ", comment=" + comment + ", assetLabel=" + assetLabel
-				+ ", rel=" + rel + "]";
 	}
 
 }

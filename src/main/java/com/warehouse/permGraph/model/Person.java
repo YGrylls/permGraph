@@ -1,11 +1,8 @@
 package com.warehouse.permGraph.model;
 
-import java.util.List;
-
 import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Property;
-import org.neo4j.ogm.annotation.Relationship;
 
 @NodeEntity
 public class Person implements IMapper {
@@ -25,27 +22,27 @@ public class Person implements IMapper {
 	@Property
 	private String familyName;
 
-	@Relationship(direction = Relationship.UNDIRECTED, type = "OFFICE_IN")
-	private List<Relation> relOFFICE_IN;
-
-	@Relationship(direction = Relationship.UNDIRECTED, type = "DIRECT_IN")
-	private List<Relation> relDIRECT_IN;
-
-	public List<Relation> getRelOFFICE_IN() {
-		return relOFFICE_IN;
-	}
-
-	public void setRelOFFICE_IN(List<Relation> relOFFICE_IN) {
-		this.relOFFICE_IN = relOFFICE_IN;
-	}
-
-	public List<Relation> getRelDIRECT_IN() {
-		return relDIRECT_IN;
-	}
-
-	public void setRelDIRECT_IN(List<Relation> relDIRECT_IN) {
-		this.relDIRECT_IN = relDIRECT_IN;
-	}
+//	@Relationship(direction = Relationship.UNDIRECTED, type = "OFFICE_IN")
+//	private List<IRel> relOFFICE_IN;
+//
+//	@Relationship(direction = Relationship.UNDIRECTED, type = "DIRECT_IN")
+//	private List<IRel> relDIRECT_IN;
+//
+//	public List<IRel> getRelOFFICE_IN() {
+//		return relOFFICE_IN;
+//	}
+//
+//	public void setRelOFFICE_IN(List<IRel> relOFFICE_IN) {
+//		this.relOFFICE_IN = relOFFICE_IN;
+//	}
+//
+//	public List<IRel> getRelDIRECT_IN() {
+//		return relDIRECT_IN;
+//	}
+//
+//	public void setRelDIRECT_IN(List<IRel> relDIRECT_IN) {
+//		this.relDIRECT_IN = relDIRECT_IN;
+//	}
 
 	public Long getId() {
 		return id;

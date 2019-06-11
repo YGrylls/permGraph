@@ -9,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.warehouse.permGraph.dao.QueryDao;
-import com.warehouse.permGraph.model.Relation;
+import com.warehouse.permGraph.model.IRel;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -20,7 +20,7 @@ public class PermGraphApplicationTests {
 
 	@Test
 	public void testReturn() {
-		List<Relation> res = dao.getEntity((long) 2072872);
+		List<IRel> res = dao.getEntity((long) 2072872);
 		System.out.println("-----------------\n" + res);
 	}
 

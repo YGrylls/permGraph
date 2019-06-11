@@ -7,7 +7,7 @@ import org.neo4j.ogm.annotation.RelationshipEntity;
 import org.neo4j.ogm.annotation.StartNode;
 
 @RelationshipEntity("DIRECT_IN")
-public class Relation implements IRel {
+public class RelationDirectIn implements IRel {
 	@Id
 	private Long id;
 
@@ -50,7 +50,7 @@ public class Relation implements IRel {
 		this.end = end;
 	}
 
-	public Relation() {
+	public RelationDirectIn() {
 
 	}
 
