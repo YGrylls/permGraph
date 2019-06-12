@@ -11,14 +11,29 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="search" placeholder="输入您要查找的实体名">
-        <button id="search" class="btn btn-outline-success my-2 my-sm-0">查找</button>
+        <div class="form-group">
+            <input id="name" class="form-control mr-sm-2" type="search" placeholder="输入您要查找的实体名">
+            <select id="category" class="custom-select">
+                <option value="Unchosen" selected>请选择要查找实体类型</option>
+                <option value="Organization">Organization</option>
+                <option value="Person">Person</option>
+                <option value="AssetClass">AssetClass</option>
+                <option value="Instrument">Instrument</option>
+                <option value="BusinessClassification">BusinessClassification</option>
+                <option value="Quote">Quote</option>
+            </select>
+            <button id="search" class="btn btn-outline-success my-2 my-sm-0">查找</button>
+        </div>
+
     </form>
 </nav>
 <div id="result"></div>
 <style>
     #result{
         background: #bee5eb;
+    }
+    #category{
+        margin-right: 2px;
     }
 </style>
 <script type="text/javascript" src="js/home.js"></script>

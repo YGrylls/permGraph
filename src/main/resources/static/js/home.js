@@ -6,7 +6,6 @@ function GroupExplorer(wrapper,config){
         distance:100
     };
     $.extend(true,defaultConfig,config);
-    console.log(defaultConfig.data.nodes);
     defaultConfig.data.links.forEach(function (e) {
         if(typeof e.source!="number"&&typeof e.target!="number"){
             var sourceNode = defaultConfig.data.nodes.filter(function (n) {
@@ -134,7 +133,7 @@ function GroupExplorer(wrapper,config){
 
     this.highlightToolTip=function(obj){
         if(obj){
-            _this.tooltip.html("<div class='title'>"+obj.name+"的资料</div><table class='detail-info'><tr><td class='td-label'>照片：</td><td>xxx</td></tr>" +
+            _this.tooltip.html("<div class='title'>"+obj.permID+"的资料</div><table class='detail-info'><tr><td class='td-label'>照片：</td><td>xxx</td></tr>" +
                 "<tr><td class='td-label'>其他：</td><td>xxx</td></tr><tr><td class='td-label'>链接：</td><td><a href='http://www.cnblogs.com/leyi'>韭菜茄子的博客</a></td></tr></table>")
                 .style("left",(d3.event.pageX+20)+"px")
                 .style("top",(d3.event.pageY-20)+"px")
@@ -267,62 +266,36 @@ function GroupExplorer(wrapper,config){
 $("#search").click(function (event) {
     event.preventDefault();
     $("#result").html("");
+    var name=$("#name").val();
+    var category=$("#category").val();
     var data={
-        "nodes":[
-            {
-                "name": "Myriel1",
-                "group": 1
-            },
-            {
-                "name": "Napoleon",
-                "group": 1
-            },
-            {
-                "name": "Mlle.Baptistine",
-                "group": 1
-            },
-            {
-                "name": "Mme.Magloire",
-                "group": 1
-            },
-            {
-                "name": "CountessdeLo",
-                "group": 1
-            },
-            {
-                "name": "Geborand",
-                "group": 1
-            },
-            {
-                "name": "Champtercier",
-                "group": 1
-            },
-            {
-                "name": "Cravatte",
-                "group": 1
-            },
-            {
-                "name": "Count",
-                "group": 1
-            },
-            {
-                "name": "OldMan",
-                "group": 1
-            },
-        ],
-        "links":[
-            {
-                "source": 0,
-                "target": 1,
-            },
-            {
-                "source": 8,
-                "target": 9,
-            }
-        ]
+        "dbID1": 2042357,
+        "dbID2": 2072872,
+        "depth": 2
+
     };
-    GroupExplorer('#result',
-        {
-            data: data
-        });
-})
+    data=JSON.stringify(data);
+    console.log(data);
+    $.ajax({
+        url:"/api/pathquery",
+        type:"POST",
+        data:data,
+        dataType:"json",
+        contentType:"application/json;charset=utf-8",
+        success:function (result) {
+            console.log(result);
+            GroupExplorer('#result',{
+                data:result
+            });
+            console.log(data);
+        },
+        error:function (error) {
+            console.log(error);
+        }
+
+    });
+    // GroupExplorer('#result',
+    //     {
+    //         data: data
+    //     });
+});
