@@ -6,6 +6,15 @@ public class ResRel {
 	private Long start;
 	private Long end;
 	private String title;
+	private String type;
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
 
 	public Long getStart() {
 		return start;
@@ -39,7 +48,7 @@ public class ResRel {
 
 	@Override
 	public String toString() {
-		return "ResRel [start=" + start + ", end=" + end + ", title=" + title + "]";
+		return "ResRel [start=" + start + ", end=" + end + ", title=" + title + ", type=" + type + "]";
 	}
 
 }

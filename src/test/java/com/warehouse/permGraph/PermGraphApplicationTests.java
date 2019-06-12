@@ -18,9 +18,12 @@ public class PermGraphApplicationTests {
 	@Autowired
 	private QueryDao dao;
 
+	// 4295865078 tencent 2042357
+	// 5000066483 alibaba 2072872
+
 	@Test
 	public void testReturn() {
-		List<IRel> res = dao.getEntity((long) 2072872);
+		List<IRel> res = dao.getPathTwo((long) 2042357, (long) 2072872);
 		System.out.println("-----------------\n" + res);
 	}
 

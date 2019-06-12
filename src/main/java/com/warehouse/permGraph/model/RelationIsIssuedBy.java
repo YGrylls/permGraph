@@ -6,8 +6,8 @@ import org.neo4j.ogm.annotation.Property;
 import org.neo4j.ogm.annotation.RelationshipEntity;
 import org.neo4j.ogm.annotation.StartNode;
 
-@RelationshipEntity("DIRECT_IN")
-public class RelationDirectIn implements IRel {
+@RelationshipEntity("IS_ISSUED_BY")
+public class RelationIsIssuedBy implements IRel {
 	@Id
 	private Long id;
 
@@ -50,13 +50,13 @@ public class RelationDirectIn implements IRel {
 		this.end = end;
 	}
 
-	public RelationDirectIn() {
+	public RelationIsIssuedBy() {
 
 	}
 
 	@Override
 	public String toString() {
-		return "RelationDirectIn [id=" + id + ", title=" + title + ", start=" + start + ", end=" + end + "]";
+		return "RelationIsIssuedBy [id=" + id + ", title=" + title + ", start=" + start + ", end=" + end + "]";
 	}
 
 }
