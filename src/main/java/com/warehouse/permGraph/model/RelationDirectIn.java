@@ -22,6 +22,10 @@ public class RelationDirectIn implements IRel {
 		return id;
 	}
 
+	public String getType() {
+		return "DIRECT_IN";
+	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}

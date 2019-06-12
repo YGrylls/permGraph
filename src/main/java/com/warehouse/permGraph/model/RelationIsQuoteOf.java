@@ -18,6 +18,10 @@ public class RelationIsQuoteOf implements IRel {
 	@EndNode
 	private IMapper end;
 
+	public String getType() {
+		return "IS_QUOTE_OF";
+	}
+
 	public Long getId() {
 		return id;
 	}

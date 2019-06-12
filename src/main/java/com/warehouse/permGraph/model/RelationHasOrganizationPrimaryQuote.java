@@ -18,6 +18,10 @@ public class RelationHasOrganizationPrimaryQuote implements IRel {
 	@EndNode
 	private IMapper end;
 
+	public String getType() {
+		return "HAS_ORGANIZATION_PRIMARY_QUOTE";
+	}
+
 	public Long getId() {
 		return id;
 	}

@@ -18,6 +18,10 @@ public class RelationIsIssuedBy implements IRel {
 	@EndNode
 	private IMapper end;
 
+	public String getType() {
+		return "IS_ISSUED_BY";
+	}
+
 	public Long getId() {
 		return id;
 	}

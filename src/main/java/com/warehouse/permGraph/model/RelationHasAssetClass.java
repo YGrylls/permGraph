@@ -18,6 +18,10 @@ public class RelationHasAssetClass implements IRel {
 	@EndNode
 	private IMapper end;
 
+	public String getType() {
+		return "HAS_ASSET_CLASS";
+	}
+
 	public Long getId() {
 		return id;
 	}

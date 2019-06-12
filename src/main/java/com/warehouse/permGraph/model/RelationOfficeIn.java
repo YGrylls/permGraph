@@ -18,6 +18,10 @@ public class RelationOfficeIn implements IRel {
 	@EndNode
 	private IMapper end;
 
+	public String getType() {
+		return "OFFICE_IN";
+	}
+
 	public Long getId() {
 		return id;
 	}

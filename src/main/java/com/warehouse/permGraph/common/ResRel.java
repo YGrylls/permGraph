@@ -1,10 +1,10 @@
 package com.warehouse.permGraph.common;
 
-import com.warehouse.permGraph.model.RelationDirectIn;
+import com.warehouse.permGraph.model.IRel;
 
 public class ResRel {
-	private Long start;
-	private Long end;
+	private Integer start;
+	private Integer end;
 	private String title;
 	private String type;
 
@@ -16,19 +16,19 @@ public class ResRel {
 		this.type = type;
 	}
 
-	public Long getStart() {
+	public Integer getStart() {
 		return start;
 	}
 
-	public void setStart(Long start) {
+	public void setStart(Integer start) {
 		this.start = start;
 	}
 
-	public Long getEnd() {
+	public Integer getEnd() {
 		return end;
 	}
 
-	public void setEnd(Long end) {
+	public void setEnd(Integer end) {
 		this.end = end;
 	}
 
@@ -40,10 +40,11 @@ public class ResRel {
 		this.title = title;
 	}
 
-	public ResRel(RelationDirectIn r) {
-		this.start = r.getStart().getId();
-		this.end = r.getEnd().getId();
+	public ResRel(int start, int end, IRel r) {
+		this.start = start;
+		this.end = end;
 		this.title = r.getTitle();
+		this.type = r.getType();
 	}
 
 	@Override

@@ -18,6 +18,10 @@ public class RelationHasPrimaryIndustryGroup implements IRel {
 	@EndNode
 	private IMapper end;
 
+	public String getType() {
+		return "HAS_PRIMARY_INDUSTRY_GROUP";
+	}
+
 	public Long getId() {
 		return id;
 	}

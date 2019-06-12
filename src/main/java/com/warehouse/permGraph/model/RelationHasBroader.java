@@ -18,6 +18,10 @@ public class RelationHasBroader implements IRel {
 	@EndNode
 	private IMapper end;
 
+	public String getType() {
+		return "HAS_BROADER";
+	}
+
 	public Long getId() {
 		return id;
 	}

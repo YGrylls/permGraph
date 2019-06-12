@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.warehouse.permGraph.model.AssetClass;
 import com.warehouse.permGraph.model.BusinessClassification;
+import com.warehouse.permGraph.model.IMapper;
 import com.warehouse.permGraph.model.Instrument;
 import com.warehouse.permGraph.model.Organization;
 import com.warehouse.permGraph.model.Person;
@@ -47,6 +48,33 @@ public class ResNode {
 
 	public void setProperty(Map<String, String> property) {
 		this.property = property;
+	}
+
+	public static ResNode ctor(IMapper o) {
+		try {
+			if (o instanceof Organization) {
+				return new ResNode((Organization) o);
+			}
+			if (o instanceof Person) {
+				return new ResNode((Person) o);
+			}
+			if (o instanceof Instrument) {
+				return new ResNode((Instrument) o);
+			}
+			if (o instanceof Quote) {
+				return new ResNode((Quote) o);
+			}
+			if (o instanceof AssetClass) {
+				return new ResNode((AssetClass) o);
+			}
+			if (o instanceof BusinessClassification) {
+				return new ResNode((BusinessClassification) o);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+
 	}
 
 	public ResNode(Organization o) {
@@ -102,6 +130,16 @@ public class ResNode {
 		this.label = "BusinessClassification";
 		this.property.put("prefLabel", o.getPrefLabel());
 		this.property.put("comment", o.getComment());
+	}
+
+	@Override
+	public int hashCode() {
+		return this.dbID.intValue();
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		return this.dbID == ((ResNode) o).getDbID();
 	}
 
 	@Override
