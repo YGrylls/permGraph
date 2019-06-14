@@ -15,6 +15,10 @@ public class Instrument implements IMapper {
 	@Property
 	private String instrumentName;
 
+	public String getName() {
+		return instrumentName;
+	}
+
 	public Long getId() {
 		return id;
 	}

@@ -13,6 +13,7 @@ import com.warehouse.permGraph.model.Quote;
 
 public class ResNode {
 
+	private String name;
 	private Long dbID;
 	private String permID;
 	private String label;
@@ -20,6 +21,14 @@ public class ResNode {
 
 	public Long getDbID() {
 		return dbID;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public void setDbID(Long dbID) {
@@ -79,6 +88,7 @@ public class ResNode {
 
 	public ResNode(Organization o) {
 		this.property = new HashMap<String, String>();
+		this.name = o.getName();
 		this.dbID = o.getId();
 		this.permID = o.getPermID();
 		this.label = "Organization";
@@ -88,6 +98,8 @@ public class ResNode {
 
 	public ResNode(Person o) {
 		this.property = new HashMap<String, String>();
+		this.name = o.getName();
+
 		this.dbID = o.getId();
 		this.permID = o.getPermID();
 		this.label = "Person";
@@ -98,6 +110,8 @@ public class ResNode {
 
 	public ResNode(Quote o) {
 		this.property = new HashMap<String, String>();
+		this.name = o.getName();
+
 		this.dbID = o.getId();
 		this.permID = o.getPermID();
 		this.label = "Quote";
@@ -108,6 +122,8 @@ public class ResNode {
 
 	public ResNode(Instrument o) {
 		this.property = new HashMap<String, String>();
+		this.name = o.getName();
+
 		this.dbID = o.getId();
 		this.permID = o.getPermID();
 		this.label = "Instrument";
@@ -115,7 +131,10 @@ public class ResNode {
 	}
 
 	public ResNode(AssetClass o) {
+
 		this.property = new HashMap<String, String>();
+		this.name = o.getName();
+
 		this.dbID = o.getId();
 		this.permID = o.getPermID();
 		this.label = "AssetClass";
@@ -125,6 +144,8 @@ public class ResNode {
 
 	public ResNode(BusinessClassification o) {
 		this.property = new HashMap<String, String>();
+		this.name = o.getName();
+
 		this.dbID = o.getId();
 		this.permID = o.getPermID();
 		this.label = "BusinessClassification";

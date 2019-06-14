@@ -18,6 +18,10 @@ public class Organization implements IMapper {
 	@Property
 	private String activityStatus;
 
+	public String getName() {
+		return organizationName;
+	}
+
 //	@Relationship(direction = Relationship.UNDIRECTED, type = "DIRECT_IN")
 //	private List<IRel> relDIRECT_IN;
 //

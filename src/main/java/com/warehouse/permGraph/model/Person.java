@@ -22,6 +22,20 @@ public class Person implements IMapper {
 	@Property
 	private String familyName;
 
+	public String getName() {
+		StringBuilder temp = new StringBuilder();
+		if (givenName != null && !"".equals(givenName)) {
+			temp.append(givenName);
+		}
+		if (preferredName != null && !"".equals(preferredName)) {
+			temp.append("(" + preferredName + ")");
+		}
+		if (familyName != null && "".equals(familyName)) {
+			temp.append(" " + familyName);
+		}
+		return temp.toString();
+	}
+
 //	@Relationship(direction = Relationship.UNDIRECTED, type = "OFFICE_IN")
 //	private List<IRel> relOFFICE_IN;
 //

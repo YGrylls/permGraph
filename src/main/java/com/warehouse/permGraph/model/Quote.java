@@ -18,6 +18,10 @@ public class Quote implements IMapper {
 	@Property
 	private String exchangeCode;
 
+	public String getName() {
+		return quoteName;
+	}
+
 	public Long getId() {
 		return id;
 	}

@@ -18,6 +18,10 @@ public class AssetClass implements IMapper {
 	@Property("label")
 	private String assetLabel;
 
+	public String getName() {
+		return assetLabel;
+	}
+
 	public Long getId() {
 		return id;
 	}

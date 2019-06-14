@@ -18,6 +18,10 @@ public class BusinessClassification implements IMapper {
 	@Property
 	private String prefLabel;
 
+	public String getName() {
+		return prefLabel;
+	}
+
 	public Long getId() {
 		return id;
 	}
