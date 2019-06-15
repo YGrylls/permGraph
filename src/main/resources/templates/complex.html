@@ -24,8 +24,32 @@
         <form class="form-inline my-2 my-lg-0">
             <div class="form-group">
                 <input id="name1" class="form-control mr-sm-2" type="search" placeholder="输入您要查找的实体名1">
+                <select id="category1" class="custom-select">
+                    <option value="Unchosen" selected>请选择实体1类型</option>
+                    <option value="Organization">Organization</option>
+                    <option value="Person">Person</option>
+                    <option value="AssetClass">AssetClass</option>
+                    <option value="Instrument">Instrument</option>
+                    <option value="BusinessClassification">BusinessClassification</option>
+                    <option value="Quote">Quote</option>
+                </select>
                 <input id="name2" class="form-control mr-sm-2" type="search" placeholder="输入您要查找的实体名2">
+                <select id="category2" class="custom-select">
+                    <option value="Unchosen" selected>请选择实体2类型</option>
+                    <option value="Organization">Organization</option>
+                    <option value="Person">Person</option>
+                    <option value="AssetClass">AssetClass</option>
+                    <option value="Instrument">Instrument</option>
+                    <option value="BusinessClassification">BusinessClassification</option>
+                    <option value="Quote">Quote</option>
+                </select>
                 <button type="button" id="search" onclick="searchEntity()" class="btn btn-outline-success my-2 my-sm-0">查找</button>
+                <select id="depth" style="float: right;" class="custom-select">
+                    <option value="0" selected>请选择查询的深度</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
+                <button type="button" style="float: right;" id="complexBtn" class="btn btn-secondary" onclick="complexRelation()">查询多跳关系</button>
             </div>
         </form>
         <div class="row col-md-12">
@@ -34,34 +58,13 @@
                 <table class="table table-bordered tab-content change">
                     <thead>
                     <tr>
-                        <th>选择</th>
-                        <th>ID1</th>
-                        <th>实体1</th>
+                        <th>Choice1</th>
+                        <th>dbID1</th>
+                        <th>Name1</th>
+                        <th>Label1</th>
                     </tr>
                     </thead>
                     <tbody id="data1">
-                    <tr>
-                        <td>
-                            <input type="radio" name="entity1" value="1">
-                        </td>
-                        <td>
-                            2222
-                        </td>
-                        <td>
-                            Name1
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="radio" name="entity1" value="2">
-                        </td>
-                        <td>
-                            3333
-                        </td>
-                        <td>
-                            Name1
-                        </td>
-                    </tr>
                     </tbody>
                 </table>
             </div>
@@ -70,39 +73,15 @@
                 <table class="table table-bordered tab-content change">
                     <thead>
                     <tr>
-                        <th>选择</th>
-                        <th>ID2</th>
-                        <th>实体2</th>
+                        <th>Choice2</th>
+                        <th>dbID2</th>
+                        <th>Name2</th>
+                        <th>Label2</th>
                     </tr>
                     </thead>
                     <tbody id="data2" class="change">
-                    <tr>
-                        <td>
-                            <input type="radio" name="entity2" value="1">
-                        </td>
-                        <td>
-                            4444
-                        </td>
-                        <td>
-                            Name2
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="radio" name="entity2" value="2">
-                        </td>
-                        <td>
-                            5555
-                        </td>
-                        <td>
-                            Name2
-                        </td>
-                    </tr>
                     </tbody>
                 </table>
-            </div>
-            <div class="container text-right change">
-                <button class="btn btn-secondary" onclick="complexRelation()">查询多跳关系</button>
             </div>
 
         </div>
@@ -247,8 +226,8 @@
 
         this.highlightToolTip=function(obj){
             if(obj){
-                _this.tooltip.html("<div class='title'>"+obj.name+"的资料</div><table class='detail-info'><tr><td class='td-label'>照片：</td><td>xxx</td></tr>" +
-                    "<tr><td class='td-label'>其他：</td><td>xxx</td></tr><tr><td class='td-label'>链接：</td><td><a href='http://www.cnblogs.com/leyi'>韭菜茄子的博客</a></td></tr></table>")
+                _this.tooltip.html("<div class='title'>"+obj.name+"</div><table class='detail-info'><tr><td class='td-label'>Category：</td><td>"+obj.label+"</td></tr>" +
+                    "<tr><td class='td-label'>dbID：</td><td>"+obj.dbID+"</td></tr</table>")
                     .style("left",(d3.event.pageX+20)+"px")
                     .style("top",(d3.event.pageY-20)+"px")
                     .style("opacity",1.0);
@@ -377,114 +356,149 @@
 
     }
 
-    var data1=[
-        {"id":1,"name":"aaa"},
-        {"id":2,"name":"bbb"}
-    ];
-    var data2=[
-        {"id":3,"name":"ccc"},
-        {"id":4,"name":"ddd"}
-    ];
     function searchEntity() {
-        console.log("search");
         $(".change").show();
-        // $("#EntityTable").css('display','show');
-        // data=[];
         $("#data1").html("");
         $("#data2").html("");
         $("#result").html("");
-        if(data1.length===0){
-            $("#data1").html("<h2>"+"没有搜索结果"+"</h2>");
-
+        var name1=$("#name1").val();
+        var name2=$("#name2").val();
+        if(name1==""){
+            alert("请输入实体名1！");
+            return;
         }
-        if(data2.length===0){
-            $("#data2").html("<h2>"+"没有搜索结果"+"</h2>");
+        if(name2==""){
+            alert("请输入实体名2！");
+            return;
         }
-        for(var i=0;i<data1.length;i++) {
-            str1 = "<tr>" +
-                "<td>" + "<input type='radio' name='entity1' value="+data1[i].id+ "></td>" +
-                "<td>" + data1[i].id + "</td>" +
-                "<td>" + data1[i].name + "</td>" +
-                "</tr>";
-            $("#data1").append(str1);
+        var category1=$("#category1").val();
+        var category2=$("#category2").val();
+        if(category1=="Unchosen"){
+            alert("请选择实体1的类型！");
+            return;
         }
-        for(var i=0;i<data2.length;i++) {
-            str2 = "<tr>" +
-                "<td>" + "<input type='radio' name='entity2' value="+data2[i].id+ "></td>" +
-                "<td>" + data2[i].id + "</td>" +
-                "<td>" + data2[i].name + "</td>" +
-                "</tr>";
-            $("#data2").append(str2);
+        if(category2=="Unchosen"){
+            alert("请选择实体2的类型");
+            return;
         }
+        var data1={
+            "label":category1,
+            "name":name1
+        };
+        var data2={
+            "label":category2,
+            "name":name2
+        }
+        data1=JSON.stringify(data1);
+        data2=JSON.stringify(data2);
+        $.ajax({
+            url: "/api/namequery",
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: 'json',
+            data: data1,
+            success:function (response) {
+                if(response.nodes.length===0){
+                    $("#data1").html("<tr>\n" +
+                        "                <td>没有查询结果</td>\n" +
+                        "                <td>NULL</td>\n" +
+                        "                <td>NULL</td>\n" +
+                        "                <td>NULL</td>\n" +
+                        "            </tr>");
+                }
+                else {
+                    for(var i=0;i<response.nodes.length;i++) {
+                        str1 = "<tr>" +
+                            "<td>" + "<input type='radio' name='entity1' value="+response.nodes[i].dbID+ "></td>" +
+                            "<td>" + response.nodes[i].dbID + "</td>" +
+                            "<td>" + response.nodes[i].name + "</td>" +
+                            "<td>" + response.nodes[i].label + "</td>" +
+                            "</tr>";
+                        $("#data1").append(str1);
+                    }
+                }
+            }
+        });
+        $.ajax({
+            url: "/api/namequery",
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: 'json',
+            data: data2,
+            success:function (response) {
+                if(response.nodes.length===0){
+                    $("#data2").html("<tr>\n" +
+                        "                <td>没有查询结果</td>\n" +
+                        "                <td>NULL</td>\n" +
+                        "                <td>NULL</td>\n" +
+                        "                <td>NULL</td>\n" +
+                        "            </tr>");
+                }
+                else {
+                    for(var i=0;i<response.nodes.length;i++) {
+                        str1 = "<tr>" +
+                            "<td>" + "<input type='radio' name='entity2' value="+response.nodes[i].dbID+ "></td>" +
+                            "<td>" + response.nodes[i].dbID + "</td>" +
+                            "<td>" + response.nodes[i].name + "</td>" +
+                            "<td>" + response.nodes[i].label + "</td>" +
+                            "</tr>";
+                        $("#data2").append(str1);
+                    }
+                }
+            }
+        });
     }
 
     function complexRelation() {
         var id1=$("input[name='entity1']:checked").val();
         var id2=$("input[name='entity2']:checked").val();
+        var depth=$("#depth").val();
+        if(depth=="0"){
+            alert("请选择你要查询的深度！");
+            return;
+        }
         if(typeof id1=='undefined'||typeof id2=='undefined'){
             alert("请选择您要查看关系的两个实体");
             return;
         }
         console.log(id1,id2);
-        $(".change").hide();
         var data={
-            "nodes":[
-                {
-                    "name": id1,
-                    "group": 1
-                },
-                {
-                    "name": id2,
-                    "group": 1
-                },
-                {
-                    "name": "Mlle.Baptistine",
-                    "group": 1
-                },
-                {
-                    "name": "Mme.Magloire",
-                    "group": 1
-                },
-                {
-                    "name": "CountessdeLo",
-                    "group": 1
-                },
-                {
-                    "name": "Geborand",
-                    "group": 1
-                },
-                {
-                    "name": "Champtercier",
-                    "group": 1
-                },
-                {
-                    "name": "Cravatte",
-                    "group": 1
-                },
-                {
-                    "name": "Count",
-                    "group": 1
-                },
-                {
-                    "name": "OldMan",
-                    "group": 1
-                }
-            ],
-            "links":[
-                // {
-                //     "source": 0,
-                //     "target": 1,
-                // },
-                // {
-                //     "source": 8,
-                //     "target": 9,
-                // }
-            ]
+            "dbID1":id1,
+            "dbID2":id2,
+            "depth":depth
         };
-        GroupExplorer('#result',
-            {
-                data: data
-            });
+        data=JSON.stringify(data);
+        $.ajax({
+            url:"/api/pathquery",
+            type:"POST",
+            contentType:"application/json;charset=utf-8",
+            dataType:'json',
+            data:data,
+            success:function (response) {
+                console.log(response);
+                if(response.nodes.length===0){
+                    $("#data1").html("<tr>\n" +
+                        "                <td>没有查询结果</td>\n" +
+                        "                <td>NULL</td>\n" +
+                        "                <td>NULL</td>\n" +
+                        "                <td>NULL</td>\n" +
+                        "            </tr>");
+                    $("#data2").html("");
+                }
+                else {
+                    $(".change").hide();
+                    GroupExplorer('#result',
+                        {
+                            data: response
+                        });
+                }
+
+            },
+            error:function (error) {
+
+                console.log(error);
+            }
+        })
     }
 </script>
 </body>
@@ -497,6 +511,13 @@
     }
     .container{
         padding-top: 1%;
+    }
+    /*#complexBtn{*/
+        /*margin-right:0;*/
+    /*}*/
+    .custom-select{
+        margin-right: 3px;
+        margin-left: 3px;
     }
 </style>
 </html>

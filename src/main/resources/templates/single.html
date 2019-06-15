@@ -35,29 +35,36 @@
             <button id="search" type="button" onclick="searchData()" class="btn btn-outline-success my-2 my-sm-0">查找</button>
         </div>
     </form>
-    <table id="EntityTable" class="table table-bordered tab-content">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>实体</th>
-            <th>操作</th>
-        </tr>
-        </thead>
-        <tbody id="data">
-        <tr>
-            <td>1</td>
-            <td>tencent</td>
-            <td>
-                <button class="btn btn-secondary">查询实体关系</button>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+    <div class="container">
+        <label><h2>模糊查询结果</h2></label>
+        <table id="EntityTable" class="table table-bordered tab-content">
+            <thead>
+            <tr>
+                <th>dbID</th>
+                <th>Name</th>
+                <th>Label</th>
+                <th>permID</th>
+                <th>ActivityStatus</th>
+                <th>Operation</th>
+            </tr>
+            </thead>
+            <tbody id="data">
+            </tbody>
+        </table>
+    </div>
+
 </div>
 <div id="result"></div>
 <script type="text/javascript">
         // d3.json("./js/data/data2.json", function(json) {
-
+        var CategoryList={
+            "Organization":1,
+            "Person":2,
+            "AssertClass":3,
+            "Instrument":4,
+            "BusinessClassificaton":5,
+            "Quote":6
+        }
         function GroupExplorer(wrapper,config){
                 var defaultConfig={
                     data:{"nodes":[],"links":[]},
@@ -194,8 +201,8 @@
 
                 this.highlightToolTip=function(obj){
                     if(obj){
-                        _this.tooltip.html("<div class='title'>"+obj.name+"的资料</div><table class='detail-info'><tr><td class='td-label'>照片：</td><td>xxx</td></tr>" +
-                                        "<tr><td class='td-label'>其他：</td><td>xxx</td></tr><tr><td class='td-label'>链接：</td><td><a href='http://www.cnblogs.com/leyi'>韭菜茄子的博客</a></td></tr></table>")
+                        _this.tooltip.html("<div class='title'>"+obj.name+"</div><table class='detail-info'><tr><td class='td-label'>Category：</td><td>"+obj.label+"</td></tr>" +
+                                        "<tr><td class='td-label'>dbID：</td><td>"+obj.dbID+"</td></tr</table>")
                                 .style("left",(d3.event.pageX+20)+"px")
                                 .style("top",(d3.event.pageY-20)+"px")
                                 .style("opacity",1.0);
@@ -324,92 +331,105 @@
 
             }
 
-        var data=[
-            {"id":1,"name":"aaa"},
-            {"id":2,"name":"bbb"}
-        ];
         function searchData(){
             console.log("search");
             $("#EntityTable").show();
             // data=[];
             $("#data").html("");
             $("#result").html("");
+            var name=$("#name").val();
+            var type=$("#category").val();
+            if(name==""){
+                alert("请输入您要查询的实体名！");
+                return;
+            }
+            if(type=="Unchosen"){
+                alert("请选择您要查询的实体类别！");
+                return;
+            }
+            var data={
+                "label":type,
+                "name":name
+            };
+            data=JSON.stringify(data);
             console.log(data);
-            if(data.length==0){
-                $("#data").html("<h2>"+"没有搜索结果"+"</h2>");
-            }
-            for(var i=0;i<data.length;i++) {
-                str1 = "<tr>" +
-                    "<td>" + data[i].id + "</td>" +
-                    "<td>" + data[i].name + "</td>" +
-                    "<td>"+"<button onclick='showRelation(this)' class='btn btn-secondary' data-id="+data[i].id+">"+"查询实体关系"+"</button>"+ "</td>"+
-                    "</tr>";
-                $("#data").append(str1);
-            }
+            $.ajax({
+                url:"/api/namequery",
+                type:"POST",
+                contentType:"application/json;charset=utf-8",
+                dataType:'json',
+                data:data,
+                success:function (response) {
+                    if(response.nodes.length===0){
+                        $("#data").html("<tr>\n" +
+                            "                <td>没有查询结果</td>\n" +
+                            "                <td>NULL</td>\n" +
+                            "                <td>NULL</td>\n" +
+                            "                <td>NULL</td>\n" +
+                            "                <td>NULL</td>\n" +
+                            "                <td>NULL</td>\n" +
+                            "            </tr>");
+                    }
+                    else {
+                        nodes=response.nodes;
+                        for(var i=0;i<nodes.length;i++) {
+                            str1 = "<tr>" +
+                                "<td>" + nodes[i].dbID + "</td>" +
+                                "<td>" + nodes[i].name + "</td>" +
+                                "<td>" + nodes[i].label + "</td>" +
+                                "<td>" + nodes[i].permID + "</td>" +
+                                "<td>" + nodes[i].property.activityStatus + "</td>" +
+                                "<td>"+"<button onclick='showRelation(this)' class='btn btn-secondary' data-id="+nodes[i].dbID+">"+"查询实体关系"+"</button>"+ "</td>"+
+                                "</tr>";
+                            $("#data").append(str1);
+                        }
+                    }
+                    console.log(response);
+                },
+                error:function (error) {
+                    console.log(error);
+                }
+
+            });
         }
 
         function showRelation(tar) {
-            $("#EntityTable").hide();
             var id=tar.getAttribute("data-id");
             console.log(id);
-            var data={
-                "nodes":[
-                    {
-                        "name": id,
-                        "group": 1
-                    },
-                    {
-                        "name": "Napoleon",
-                        "group": 1
-                    },
-                    {
-                        "name": "Mlle.Baptistine",
-                        "group": 1
-                    },
-                    {
-                        "name": "Mme.Magloire",
-                        "group": 1
-                    },
-                    {
-                        "name": "CountessdeLo",
-                        "group": 1
-                    },
-                    {
-                        "name": "Geborand",
-                        "group": 1
-                    },
-                    {
-                        "name": "Champtercier",
-                        "group": 1
-                    },
-                    {
-                        "name": "Cravatte",
-                        "group": 1
-                    },
-                    {
-                        "name": "Count",
-                        "group": 1
-                    },
-                    {
-                        "name": "OldMan",
-                        "group": 1
+            var url="/api/entityquery/"+id;
+            $.ajax({
+                url:url,
+                type:"POST",
+                contentType:"application/json;charset=utf-8",
+                dataType:'json',
+                success:function (response) {
+                    if(response.nodes.length===0){
+                        $("#data").html("<tr>\n" +
+                            "                <td>没有查询结果</td>\n" +
+                            "                <td>NULL</td>\n" +
+                            "                <td>NULL</td>\n" +
+                            "                <td>NULL</td>\n" +
+                            "                <td>NULL</td>\n" +
+                            "                <td>NULL</td>\n" +
+                            "            </tr>");
                     }
-                ],
-                "links":[
-                    // {
-                    //     "source": 0,
-                    //     "target": 1,
-                    // },
-                    // {
-                    //     "source": 8,
-                    //     "target": 9,
-                    // }
-                ]
-            };
-            GroupExplorer('#result',
-                {
-                    data: data
-                });
+                    else {
+                        $("#EntityTable").hide();
+                        for(var i=0;i<response.nodes.length;i++){
+                            response.nodes[i].group=CategoryList[response.nodes[i].label];
+                        }
+                       console.log(response);
+                        GroupExplorer('#result',
+                            {
+                                data: response
+                            });
+
+                    }
+                },
+                error:function (error) {
+                    console.log(error);
+                }
+            });
         };
 
 </script>
