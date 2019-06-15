@@ -3,8 +3,8 @@ package com.warehouse.permGraph.common;
 import com.warehouse.permGraph.model.IRel;
 
 public class ResRel {
-	private Integer start;
-	private Integer end;
+	private Integer target;
+	private Integer source;
 	private String title;
 	private String type;
 
@@ -16,22 +16,6 @@ public class ResRel {
 		this.type = type;
 	}
 
-	public Integer getStart() {
-		return start;
-	}
-
-	public void setStart(Integer start) {
-		this.start = start;
-	}
-
-	public Integer getEnd() {
-		return end;
-	}
-
-	public void setEnd(Integer end) {
-		this.end = end;
-	}
-
 	public String getTitle() {
 		return title;
 	}
@@ -41,15 +25,31 @@ public class ResRel {
 	}
 
 	public ResRel(int start, int end, IRel r) {
-		this.start = start;
-		this.end = end;
+		this.source = start;
+		this.target = end;
 		this.title = r.getTitle();
 		this.type = r.getType();
 	}
 
+	public Integer getTarget() {
+		return target;
+	}
+
+	public void setTarget(Integer target) {
+		this.target = target;
+	}
+
+	public Integer getSource() {
+		return source;
+	}
+
+	public void setSource(Integer source) {
+		this.source = source;
+	}
+
 	@Override
 	public String toString() {
-		return "ResRel [start=" + start + ", end=" + end + ", title=" + title + ", type=" + type + "]";
+		return "ResRel [target=" + target + ", source=" + source + ", title=" + title + ", type=" + type + "]";
 	}
 
 }
