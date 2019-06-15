@@ -21,11 +21,11 @@ public interface QueryDao extends Neo4jRepository<IRel, Long> {
 	@Query("MATCH data=(o)-[r*1..3]-(n) WHERE id(o)={0} AND id(n)={1} RETURN data")
 	public List<IRel> getPathThree(Long id0, Long id1);
 
-	@Query("MATCH (n:Organization) WHERE n.organizationName CONTAINS {0} RETURN n LIMIT 20")
+	@Query("MATCH (n:Organization)-[r]-() WHERE n.organizationName CONTAINS {0} RETURN n, count(r) AS c ORDER BY c DESC LIMIT 20")
 	public List<IMapper> getOrganization(String name);
 
 //
-	@Query("MATCH (n:Person) WHERE n.givenName IN {0} AND n.familyName IN {0} OR n.preferredName IN {0} RETURN n LIMIT 20")
+	@Query("MATCH (n:Person)-[r]-() WHERE n.givenName IN {0} AND n.familyName IN {0} OR n.preferredName IN {0} RETURN n, count(r) AS c ORDER BY c DESC LIMIT 20")
 	public List<IMapper> getPerson(List<String> name);
 
 //
