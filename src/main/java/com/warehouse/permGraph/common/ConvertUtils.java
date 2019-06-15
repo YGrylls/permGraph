@@ -3,6 +3,7 @@ package com.warehouse.permGraph.common;
 import java.util.HashMap;
 import java.util.List;
 
+import com.warehouse.permGraph.model.IMapper;
 import com.warehouse.permGraph.model.IRel;
 
 public class ConvertUtils {
@@ -33,6 +34,17 @@ public class ConvertUtils {
 
 		return res;
 
+	}
+
+	public static Result convertNodes(List<IMapper> nodes) {
+		if (nodes == null) {
+			return null;
+		}
+		Result res = new Result();
+		for (IMapper n : nodes) {
+			res.getNodes().add(ResNode.ctor(n));
+		}
+		return res;
 	}
 
 }

@@ -1,5 +1,9 @@
 package com.warehouse.permGraph.controller;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,7 +25,36 @@ public class QueryController {
 
 	@PostMapping("/api/namequery")
 	public Result nameQuery(@RequestBody NameRequest req) {
-		return null;
+		String label = req.getLabel();
+		List<String> names = null;
+		if (req.getName() == null)
+			return null;
+		else {
+			names = new ArrayList<String>(Arrays.asList(req.getName().split(" ")));
+			System.out.println(names);
+		}
+		if (label == null) {
+			return null;
+		} else if ("Person".equals(label)) {
+			return queryService.getPerson(names);
+
+		} else if ("Organization".equals(label)) {
+			return queryService.getOrganization(names.get(0));
+
+		} else if ("AssetClass".equals(label)) {
+			return queryService.getAssetClass(names.get(0));
+
+		} else if ("Quote".equals(label)) {
+			return queryService.getQuote(names.get(0));
+
+		} else if ("Instrument".equals(label)) {
+			return queryService.getInstrument(names.get(0));
+
+		} else if ("BusinessClassification".equals(label)) {
+			return queryService.getBC(names.get(0));
+		} else
+			return null;
+
 	}
 
 	@PostMapping("/api/entityquery/{dbid}")

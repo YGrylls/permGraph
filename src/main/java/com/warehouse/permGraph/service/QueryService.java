@@ -30,4 +30,40 @@ public class QueryService {
 		}
 		return res;
 	}
+
+	public Result getPerson(List<String> name) {
+		Result res = null;
+		res = ConvertUtils.convertNodes(dao.getPerson(name));
+		return res;
+	}
+
+	public Result getOrganization(String name) {
+		Result res = null;
+		res = ConvertUtils.convertNodes(dao.getOrganization(name));
+		return res;
+	}
+
+	public Result getAssetClass(String name) {
+		Result res = null;
+		res = ConvertUtils.convertNodes(dao.getAssetClass(name));
+		return res;
+	}
+
+	public Result getInstrument(String name) {
+		Result res = null;
+		res = ConvertUtils.convertNodes(dao.getInstrument(name));
+		return res;
+	}
+
+	public Result getBC(String name) {
+		Result res = null;
+		res = ConvertUtils.convertNodes(dao.getBC(name));
+		return res;
+	}
+
+	public Result getQuote(String name) {
+		Result res = null;
+		res = ConvertUtils.convertNodes(dao.getQuote(name));
+		return res;
+	}
 }
