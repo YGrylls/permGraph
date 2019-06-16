@@ -30,7 +30,7 @@ public class Person implements IMapper {
 		if (preferredName != null && !"".equals(preferredName)) {
 			temp.append("(" + preferredName + ")");
 		}
-		if (familyName != null && "".equals(familyName)) {
+		if (familyName != null && !"".equals(familyName)) {
 			temp.append(" " + familyName);
 		}
 		return temp.toString();
