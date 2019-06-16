@@ -44,7 +44,7 @@
                 <th>Name</th>
                 <th>Label</th>
                 <th>permID</th>
-                <th>ActivityStatus</th>
+                <th>Property</th>
                 <th>Operation</th>
             </tr>
             </thead>
@@ -201,8 +201,12 @@
 
                 this.highlightToolTip=function(obj){
                     if(obj){
+                        var pro=""
+                        for(var key in obj.property){
+                            pro+="<tr><td class='td-label'>"+key+"：</td><td>"+obj.property[key]+"</td></tr>"
+                        }
                         _this.tooltip.html("<div class='title'>"+obj.name+"</div><table class='detail-info'><tr><td class='td-label'>Category：</td><td>"+obj.label+"</td></tr>" +
-                                        "<tr><td class='td-label'>dbID：</td><td>"+obj.dbID+"</td></tr</table>")
+                                        "<tr><td class='td-label'>dbID：</td><td>"+obj.dbID+"</td></tr>"+pro+"</table>")
                                 .style("left",(d3.event.pageX+20)+"px")
                                 .style("top",(d3.event.pageY-20)+"px")
                                 .style("opacity",1.0);
@@ -373,12 +377,16 @@
                     else {
                         nodes=response.nodes;
                         for(var i=0;i<nodes.length;i++) {
+                            var pro="";
+                            for(var key in nodes[i].property){
+                                pro+=key+":"+nodes[i].property[key]+"\n";
+                            }
                             str1 = "<tr>" +
                                 "<td>" + nodes[i].dbID + "</td>" +
                                 "<td>" + nodes[i].name + "</td>" +
                                 "<td>" + nodes[i].label + "</td>" +
                                 "<td>" + nodes[i].permID + "</td>" +
-                                "<td>" + nodes[i].property.activityStatus + "</td>" +
+                                "<td>" + pro + "</td>" +
                                 "<td>"+"<button onclick='showRelation(this)' class='btn btn-secondary' data-id="+nodes[i].dbID+">"+"查询实体关系"+"</button>"+ "</td>"+
                                 "</tr>";
                             $("#data").append(str1);

@@ -226,8 +226,12 @@
 
         this.highlightToolTip=function(obj){
             if(obj){
+                var pro=""
+                for(var key in obj.property){
+                    pro+="<tr><td class='td-label'>"+key+"：</td><td>"+obj.property[key]+"</td></tr>"
+                }
                 _this.tooltip.html("<div class='title'>"+obj.name+"</div><table class='detail-info'><tr><td class='td-label'>Category：</td><td>"+obj.label+"</td></tr>" +
-                    "<tr><td class='td-label'>dbID：</td><td>"+obj.dbID+"</td></tr</table>")
+                    "<tr><td class='td-label'>dbID：</td><td>"+obj.dbID+"</td></tr>"+pro+"</table>")
                     .style("left",(d3.event.pageX+20)+"px")
                     .style("top",(d3.event.pageY-20)+"px")
                     .style("opacity",1.0);
@@ -487,6 +491,7 @@
                 }
                 else {
                     $(".change").hide();
+                    $("#result").html("");
                     GroupExplorer('#result',
                         {
                             data: response
