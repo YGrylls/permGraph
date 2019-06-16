@@ -17,8 +17,12 @@ public class QueryService {
 	private QueryDao dao;
 
 	public Result getEntity(Long dbid) {
+
 		List<IRel> query = dao.getEntity(dbid);
-		return ConvertUtils.convertToResult(query);
+		System.out.println(query);
+		Result res = ConvertUtils.convertToResult(query);
+		System.out.println(res);
+		return res;
 	}
 
 	public Result getPath(Long dbid1, Long dbid2, Integer depth) {
